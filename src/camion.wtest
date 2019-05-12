@@ -1,0 +1,57 @@
+import camion.*
+import cosas.*
+
+describe "tests de camion" {
+
+	fixture {
+		camion.cargar(paqueteLadrillos)
+		camion.cargar(bumblebee)
+		camion.cargar(bateriaAntiaerea)
+		camion.cargar(residuosRadioactivos)
+	}
+	test "existe un paquete de Ladrillos en el camion"{
+		assert.that(camion.cosas().contains(paqueteLadrillos))
+	}
+	test "no existe un embalaje de seguridad en el camion"{
+		assert.notThat(camion.cosas().contains(embalajeDeSeguridad))
+	}
+	test "peso total del camion"{
+		assert.equals(2139, camion.pesoTotal())
+	}
+	test "chequear exceso de peso actual"{
+		assert.notThat(camion.excedidoDePeso())
+	}
+	test "existe una cosa que pese"{
+		assert.that(camion.tieneAlgoQuePesaEntre(10, 150))
+	}
+	test "no puede circular en ruta"{
+		assert.notThat(camion.puedeCircularEnRuta(2))
+	}
+	test "cosa mas pesada"{
+		assert.equals(bumblebee, camion.cosaMasPesada())
+	}
+	test "descargar cosas"{
+		camion.descargar(bumblebee)
+		assert.notThat(camion.cosas().contains(bumblebee))
+	}
+	test "objetos mas peligrosos que cosa"{
+		assert.equals([paqueteLadrillos,bumblebee, bateriaAntiaerea, residuosRadioactivos ], camion.objetosMasPeligrososQue(arenaAGranel))
+		assert.equals([residuosRadioactivos], camion.objetosMasPeligrososQue(bateriaAntiaerea))
+	}
+	test "bultos"{
+		paqueteLadrillos.cantidad(500)
+		assert.equals(5, paqueteLadrillos.bulto())
+		assert.equals(10, camion.totalBultos())
+	}
+	test "lista de pesos actual"{
+		assert.equals([24,800,300,15],camion.pesos())
+	}
+	
+	test "agregando nuevas cosas"{
+		camion.cargar(knightRider)
+		embalajeDeSeguridad.cobertura(bumblebee)
+		camion.cargar(embalajeDeSeguridad)
+		assert.equals(3439, camion.pesoTotal())
+		assert.notEquals(knightRider, camion.cosaMasPesada())
+	}
+}

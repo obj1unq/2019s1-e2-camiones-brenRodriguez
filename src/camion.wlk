@@ -7,8 +7,9 @@ object camion {
 	method descargar(unaCosa){
 		cosas.remove(unaCosa)
 	}
+	
 	method pesoTotal(){
-		return 1000 + self.carga()
+		return 1000 + cosas.sum({unaCosa => unaCosa.peso()})
 	}
 
 	method excedidoDePeso(){
@@ -30,16 +31,17 @@ object camion {
 	method cosaMasPesada(){
 		return cosas.max({unaCosa => unaCosa.peso()})
 	}
+	
+	method totalBultos(){
+		return cosas.map({unaCosa => unaCosa.bulto()}).sum()
+	}
+	
 	method pesos(){
 		return cosas.map({unaCosa => unaCosa.peso()})
 	}
-	method totalBultos(){
-		return cosas.map({unaCosa => unaCosa.bulto()}).sum()
-		 
-	}
+	
 	method cargar(unaCosa) {
 		cosas.add(unaCosa)
-		
+		unaCosa.reaccionar()
 	}
-
 }

@@ -1,0 +1,19 @@
+import camion.*
+import cosas.*
+
+describe "test de cosas"{
+	
+	test "peso variable del paquete de ladrillos "{
+		assert.equals(4, paqueteLadrillos.peso())
+		camion.cargar(paqueteLadrillos)
+		assert.equals(24, paqueteLadrillos.peso())
+	}
+	test "transformacion de las cosas del contenedor "{
+		assert.equals(910, contenedorPortuario.peso())
+		camion.cargar(contenedorPortuario)
+		assert.equals(false, bumblebee.transformadoEnAuto())
+		assert.equals(20, arenaAGranel.peso())
+		assert.equals(920, contenedorPortuario.peso())
+		assert.equals(30, contenedorPortuario.nivelPeligrosidad())
+	}
+}
